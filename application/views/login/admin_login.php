@@ -13,32 +13,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="<?php echo base_url()?>LoginHelper/images/icons/favicon.ico"/>
+    <link rel="icon" type="image/png" href="<?php echo base_url()?>loginHelper/images/icons/favicon.ico"/>
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/css/util.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>LoginHelper/css/main.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/css/util.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>loginHelper/css/main.css">
     <!--===============================================================================================-->
 </head>
 <body>
 
 <div class="limiter">
-    <div class="container-login100" style="background-image: url('<?php echo base_url()?>LoginHelper/images/bg-01.jpg');">
+    <div class="container-login100" style="background-image: url('<?php echo base_url()?>loginHelper/images/bg-01.jpg');">
         <div class="wrap-login100">
             <form class="login100-form validate-form" action="<?php echo base_url('LoginController/admin_login'); ?>" method="post">
 					<span class="login100-form-logo">
@@ -95,21 +95,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id="dropDownSelect1"></div>
 
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/vendor/animsition/js/animsition.min.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/vendor/bootstrap/js/popper.js"></script>
-<script src="<?php echo base_url()?>LoginHelper/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/bootstrap/js/popper.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/vendor/select2/select2.min.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/vendor/daterangepicker/moment.min.js"></script>
-<script src="<?php echo base_url()?>LoginHelper/vendor/daterangepicker/daterangepicker.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/daterangepicker/moment.min.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/vendor/countdowntime/countdowntime.js"></script>
+<script src="<?php echo base_url()?>loginHelper/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-<script src="<?php echo base_url()?>LoginHelper/js/main.js"></script>
+<script src="<?php echo base_url()?>loginHelper/js/main.js"></script>
 
 </body>
 </html>
