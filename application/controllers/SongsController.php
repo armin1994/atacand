@@ -21,31 +21,7 @@ class SongsController extends CI_Controller
             //$this->load->view('admin/dashboard');
             //$this->GetAllUser();
             $this->load->helper(array('form', 'url','alert_helper'));
-            $client     = new GuzzleHttp\Client();
 
-            #This url define speific Target for guzzle
-            $url        = 'http://adcarryteam.000webhostapp.com/jsonsignupVerify.php';
-
-            #guzzle
-            try {
-                # guzzle post request example with form parameter
-                $response = $client->request( 'POST',
-                    $url,
-                    [ 'username' => 'bouzid.saif@hotmail.com'
-
-                    ]
-                );
-                #guzzle repose for future use
-                echo $response->getStatusCode(); // 200
-                echo $response->getReasonPhrase(); // OK
-                echo $response->getProtocolVersion(); // 1.1
-                echo $response->getBody();
-            } catch (GuzzleHttp\Exception\BadResponseException $e) {
-                #guzzle repose for future use
-                $response = $e->getResponse();
-                $responseBodyAsString = $response->getBody()->getContents();
-                print_r($responseBodyAsString);
-            }
             $this->load->view('admin/upload_song', array('error' => ' ' ));
         }else{
             $this->load->helper('form');
@@ -53,6 +29,59 @@ class SongsController extends CI_Controller
         }
 
 
+    }
+    public function do_upload_test(){
+        $client     = new GuzzleHttp\Client();
+
+        #This url define speific Target for guzzle
+        $url        = 'http://adcarryteam.000webhostapp.com/uploadimage.php';
+
+        #guzzle
+        try {
+            # guzzle post request example with form parameter
+            $response = $client->request( 'POST',
+                $url,
+                [
+                    'multipart' => [
+                        [
+                            'name'     => 'field_name',
+                            'contents' => 'abc'
+                        ],
+                        [
+                            'name'     => 'file_name',
+                            'image' => $this->input->file('userfile')
+                        ],
+                        [
+                            'name'     => 'other_file',
+                            'contents' => 'hello',
+                            'filename' => 'filename.mp3',
+                            'headers'  => [
+                                'X-Foo' => 'this is an extra header to include'
+                            ]
+                        ]
+                    ],
+                    [ 'name' => 'saif']
+                ]
+            );
+            #guzzle repose for future use
+            echo $response->getStatusCode(); // 200
+            echo $response->getReasonPhrase(); // OK
+            echo $response->getProtocolVersion(); // 1.1
+            echo $response->getBody();
+            $error = array('error' => $response);
+
+            $this->alert->set('alert-danger','Song: '.$error);
+            $this->load->view('admin/upload_song');
+        } catch (GuzzleHttp\Exception\BadResponseException $e) {
+            #guzzle repose for future use
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            print_r($responseBodyAsString);
+            $error = array('error' => $responseBodyAsString);
+
+            $this->alert->set('alert-danger','Song: '.$error);
+            $this->load->view('admin/upload_song');
+        }
     }
     public function do_upload() {
 

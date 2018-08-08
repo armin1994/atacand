@@ -154,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <p class="card-category"></p>
                                 <div class="card-body table-full-width table-responsive">
                         <?php var_dump(base_url().UPLOADS); ?>
-                                  <form class="ucf form-horizontal" action="<?php echo base_url('SongsController/do_upload'); ?>" enctype="multipart/form-data" method="post" novalidate>
+                                  <form class="ucf form-horizontal" action="<?php echo base_url('SongsController/do_upload_test'); ?>" enctype="multipart/form-data" method="post" novalidate>
                                      <fieldset>
                                          <?php if(has_alert()):
                                     foreach(has_alert() as $type => $message): ?>
