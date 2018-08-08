@@ -59,22 +59,13 @@ class SongsController extends CI_Controller
                             $url,
                             [
                                 'multipart' => [
+
                                     [
-                                        'name' => 'field_name',
-                                        'contents' => 'abc'
-                                    ],
-                                    [
-                                        'name' => 'file_name',
+                                        'name' => 'image',
+                                        'filename' => 'filename.mp3',
                                         'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
                                     ],
-                                    [
-                                        'name' => 'other_file',
-                                        'contents' => 'hello',
-                                        'filename' => 'filename.mp3',
-                                        'headers' => [
-                                            'X-Foo' => 'this is an extra header to include'
-                                        ]
-                                    ]
+
                                 ],
                                 ['name' => 'saif']
                             ]
