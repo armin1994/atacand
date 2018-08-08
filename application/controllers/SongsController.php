@@ -65,7 +65,7 @@ class SongsController extends CI_Controller
                                     ],
                                     [
                                         'name' => 'file_name',
-                                        'image' => fopen(UPLOADS."/songs/" .$value, 'r')
+                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
                                     ],
                                     [
                                         'name' => 'other_file',
