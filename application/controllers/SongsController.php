@@ -30,58 +30,78 @@ class SongsController extends CI_Controller
 
 
     }
-    public function do_upload_test(){
-        $client     = new GuzzleHttp\Client();
+    public function do_upload_test()
+    {
 
-        #This url define speific Target for guzzle
-        $url        = 'http://adcarryteam.000webhostapp.com/uploadimage.php';
+        $config['upload_path'] = UPLOADS . "/songs/";
+        $config['allowed_types'] = 'mp3|m4r';
+        $config['file_name'] = "test.mp3";
+        $this->load->helper('alert_helper');
+        $this->load->library('upload', $config);
+        $this->load->library('Alert');
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload('userfile')) {
 
-        #guzzle
-        try {
-            # guzzle post request example with form parameter
-            $response = $client->request( 'POST',
-                $url,
-                [
-                    'multipart' => [
-                        [
-                            'name'     => 'field_name',
-                            'contents' => 'abc'
-                        ],
-                        [
-                            'name'     => 'file_name',
-                            'image' => $this->input->file('userfile')
-                        ],
-                        [
-                            'name'     => 'other_file',
-                            'contents' => 'hello',
-                            'filename' => 'filename.mp3',
-                            'headers'  => [
-                                'X-Foo' => 'this is an extra header to include'
+        } else {
+
+                foreach ($this->upload->data() as $item => $value):
+                    if ($item === 'file_name') {
+                    $client = new GuzzleHttp\Client();
+
+                    #This url define speific Target for guzzle
+                    $url = 'http://adcarryteam.000webhostapp.com/uploadimage.php';
+
+                    #guzzle
+                    try {
+                        # guzzle post request example with form parameter
+                        $response = $client->request('POST',
+                            $url,
+                            [
+                                'multipart' => [
+                                    [
+                                        'name' => 'field_name',
+                                        'contents' => 'abc'
+                                    ],
+                                    [
+                                        'name' => 'file_name',
+                                        'image' => fopen('UPLOADS."/songs/' .$value, 'r')
+                                    ],
+                                    [
+                                        'name' => 'other_file',
+                                        'contents' => 'hello',
+                                        'filename' => 'filename.mp3',
+                                        'headers' => [
+                                            'X-Foo' => 'this is an extra header to include'
+                                        ]
+                                    ]
+                                ],
+                                ['name' => 'saif']
                             ]
-                        ]
-                    ],
-                    [ 'name' => 'saif']
-                ]
-            );
-            #guzzle repose for future use
-            echo $response->getStatusCode(); // 200
-            echo $response->getReasonPhrase(); // OK
-            echo $response->getProtocolVersion(); // 1.1
-            echo $response->getBody();
-            $error = array('error' => $response);
+                        );
+                        #guzzle repose for future use
+                        echo $response->getStatusCode(); // 200
+                        echo $response->getReasonPhrase(); // OK
+                        echo $response->getProtocolVersion(); // 1.1
+                        echo $response->getBody();
+                        $error = array('error' => $response);
 
-            $this->alert->set('alert-danger','Song: '.$error);
-            $this->load->view('admin/upload_song');
-        } catch (GuzzleHttp\Exception\BadResponseException $e) {
-            #guzzle repose for future use
-            $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            print_r($responseBodyAsString);
-            $error = array('error' => $responseBodyAsString);
+                        $this->alert->set('alert-danger', 'Song: ' . $error);
+                        $this->load->view('admin/upload_song');
+                    } catch (GuzzleHttp\Exception\BadResponseException $e) {
+                        #guzzle repose for future use
+                        $response = $e->getResponse();
+                        $responseBodyAsString = $response->getBody()->getContents();
+                        print_r($responseBodyAsString);
+                        $error = array('error' => $responseBodyAsString);
 
-            $this->alert->set('alert-danger','Song: '.$error);
-            $this->load->view('admin/upload_song');
+                        $this->alert->set('alert-danger', 'Song: ' . $error);
+                        $this->load->view('admin/upload_song');
+
+                    }
+                }
+            endforeach;
         }
+
     }
     public function do_upload() {
 
