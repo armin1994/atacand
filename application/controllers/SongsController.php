@@ -30,6 +30,7 @@ class SongsController extends CI_Controller
 
     }
     public function do_upload() {
+        var_dump(base_url().UPLOADS);
         $config['upload_path']          = UPLOADS."/songs/";
         $config['allowed_types']        = 'mp3|m4r';
         $config['file_name'] = "test.mp3";
