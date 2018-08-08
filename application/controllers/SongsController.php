@@ -86,22 +86,8 @@ class SongsController extends CI_Controller
                     #guzzle
                     try {
                         # guzzle post request example with form parameter
-                        $request =  new GuzzleHttp\Psr7\Request('POST','http://adcarryteam.000webhostapp.com/uploadAyoub.php'
-                            ,
-                            [
-                                'multipart' => [
 
-                                    [
-                                        'name' => 'image',
-                                        'filename' => 'filename.mp3',
-                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
-                                    ],
-
-                                ],
-                                ['name' => 'saif']
-                            ]
-                        );
-                        /*$response = $client->request('POST',
+                        $response = $client->request('POST',
                             $url,
                             [
                                 'multipart' => [
@@ -109,15 +95,14 @@ class SongsController extends CI_Controller
                                     [
                                         'name' => 'image',
                                         'filename' => 'filename.mp3',
-                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
+                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r'),
+                                        'headers'  => ['Content-Type' => 'audio/mp3']
                                     ],
 
                                 ],
                                 ['name' => 'saif']
                             ]
-                        ); */
-                        var_dump($request);
-                        $response = $client->send($request);
+                        );
                         #guzzle repose for future use
 
                         echo $response->getStatusCode(); // 200
