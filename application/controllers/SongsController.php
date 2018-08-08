@@ -32,6 +32,7 @@ class SongsController extends CI_Controller
     public function do_upload() {
         $config['upload_path']          = UPLOADS."/songs/";
         $config['allowed_types']        = 'mp3|m4r';
+        $config['file_name'] = "test.mp3";
         $this->load->helper('alert_helper');
         $this->load->library('upload', $config);
         $this->load->library('Alert');
