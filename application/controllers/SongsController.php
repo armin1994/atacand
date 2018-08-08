@@ -24,15 +24,15 @@ class SongsController extends CI_Controller
             $client     = new GuzzleHttp\Client();
 
             #This url define speific Target for guzzle
-            $url        = 'http://www.google.com';
+            $url        = 'http://adcarryteam.000webhostapp.com/jsonsignupVerify.php';
 
             #guzzle
             try {
                 # guzzle post request example with form parameter
                 $response = $client->request( 'POST',
                     $url,
-                    [ 'form_params'
-                    => [ 'processId' => '2' ]
+                    [ 'username' => 'bouzid.saif@hotmail.com'
+
                     ]
                 );
                 #guzzle repose for future use
