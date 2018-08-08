@@ -30,6 +30,37 @@ class SongsController extends CI_Controller
 
 
     }
+    public function do_upload_test2(){
+        $config['upload_path'] = UPLOADS . "/songs/";
+        $config['allowed_types'] = 'mp3|m4r';
+        $config['file_name'] = "test.mp3";
+        $config['overwrite'] = TRUE;
+        $this->load->helper('alert_helper');
+        $this->load->library('upload', $config);
+        $this->load->library('Alert');
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload('userfile')) {
+
+        } else {
+            foreach ($this->upload->data() as $item => $value):
+                if ($item === 'file_name') {
+            $mulipart = new GuzzleHttp\Psr7\MultipartStream(
+              [
+                  [
+                      'name' => 'upload_file',
+                      'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
+                  ]
+              ]
+            );
+            $request = new GuzzleHttp\Psr7\Request('POST','http://adcarryteam.000webhostapp.com/uploadAyoub.php');
+            $request = $request->withBody($mulipart);
+            $client = new GuzzleHttp\Client();
+            $response = $client->send($request);
+            echo $response->getBody();
+                }
+            endforeach;
+        }
+    }
     public function do_upload_test()
     {
 
@@ -55,7 +86,22 @@ class SongsController extends CI_Controller
                     #guzzle
                     try {
                         # guzzle post request example with form parameter
-                        $response = $client->request('POST',
+                        $request =  new GuzzleHttp\Psr7\Request('POST','http://adcarryteam.000webhostapp.com/uploadAyoub.php'
+                            ,
+                            [
+                                'multipart' => [
+
+                                    [
+                                        'name' => 'image',
+                                        'filename' => 'filename.mp3',
+                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
+                                    ],
+
+                                ],
+                                ['name' => 'saif']
+                            ]
+                        );
+                        /*$response = $client->request('POST',
                             $url,
                             [
                                 'multipart' => [
@@ -63,14 +109,17 @@ class SongsController extends CI_Controller
                                     [
                                         'name' => 'image',
                                         'filename' => 'filename.mp3',
-                                        'contents' => $this->upload->data()
+                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
                                     ],
 
                                 ],
                                 ['name' => 'saif']
                             ]
-                        );
+                        ); */
+                        var_dump($request->__toString());
+                        $response = $client->send($request);
                         #guzzle repose for future use
+
                         echo $response->getStatusCode(); // 200
                         echo $response->getReasonPhrase(); // OK
                         echo $response->getProtocolVersion(); // 1.1
