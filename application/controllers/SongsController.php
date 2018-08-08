@@ -36,6 +36,7 @@ class SongsController extends CI_Controller
         $config['upload_path'] = UPLOADS . "/songs/";
         $config['allowed_types'] = 'mp3|m4r';
         $config['file_name'] = "test.mp3";
+        $config['overwrite'] = TRUE;
         $this->load->helper('alert_helper');
         $this->load->library('upload', $config);
         $this->load->library('Alert');
@@ -64,7 +65,7 @@ class SongsController extends CI_Controller
                                     ],
                                     [
                                         'name' => 'file_name',
-                                        'image' => fopen('UPLOADS."/songs/' .$value, 'r')
+                                        'image' => fopen(UPLOADS."/songs/" .$value, 'r')
                                     ],
                                     [
                                         'name' => 'other_file',
