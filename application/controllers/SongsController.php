@@ -12,7 +12,7 @@ class SongsController extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
-        $this->load->library('guzzle');
+
         $this->load->helper(array('form', 'url'));
     }
     public function index() {
@@ -21,7 +21,31 @@ class SongsController extends CI_Controller
             //$this->load->view('admin/dashboard');
             //$this->GetAllUser();
             $this->load->helper(array('form', 'url','alert_helper'));
+            $client     = new GuzzleHttp\Client();
 
+            #This url define speific Target for guzzle
+            $url        = 'http://www.google.com';
+
+            #guzzle
+            try {
+                # guzzle post request example with form parameter
+                $response = $client->request( 'POST',
+                    $url,
+                    [ 'form_params'
+                    => [ 'processId' => '2' ]
+                    ]
+                );
+                #guzzle repose for future use
+                echo $response->getStatusCode(); // 200
+                echo $response->getReasonPhrase(); // OK
+                echo $response->getProtocolVersion(); // 1.1
+                echo $response->getBody();
+            } catch (GuzzleHttp\Exception\BadResponseException $e) {
+                #guzzle repose for future use
+                $response = $e->getResponse();
+                $responseBodyAsString = $response->getBody()->getContents();
+                print_r($responseBodyAsString);
+            }
             $this->load->view('admin/upload_song', array('error' => ' ' ));
         }else{
             $this->load->helper('form');
