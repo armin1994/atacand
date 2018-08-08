@@ -116,7 +116,7 @@ class SongsController extends CI_Controller
                                 ['name' => 'saif']
                             ]
                         ); */
-                        var_dump($request->__toString());
+                        var_dump($request);
                         $response = $client->send($request);
                         #guzzle repose for future use
 
