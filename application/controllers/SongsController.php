@@ -30,8 +30,8 @@ class SongsController extends CI_Controller
 
     }
     public function do_upload() {
-        
-        $config['upload_path']          = UPLOADS."/songs/";
+
+        $config['upload_path']          = "https:".base_url().UPLOADS."/songs/";
         $config['allowed_types']        = 'mp3|m4r';
         $config['file_name'] = "test.mp3";
         $this->load->helper('alert_helper');
@@ -64,7 +64,7 @@ class SongsController extends CI_Controller
         }
     }
     public function do_upload_lyrics() {
-        $config['upload_path']          = UPLOADS."/lyrics/";
+        $config['upload_path']          = "https:".base_url().UPLOADS."/lyrics/";
         $config['allowed_types']        = 'txt|lrc';
         $this->load->helper('alert_helper');
         $this->load->library('upload', $config);
@@ -96,7 +96,7 @@ class SongsController extends CI_Controller
         }
     }
     public function do_upload_image() {
-        $config['upload_path']          = UPLOADS."/images/";
+        $config['upload_path']          = "https:".base_url().UPLOADS."/images/";
         $config['allowed_types']        = 'jpg|jpeg|png';
         $this->load->helper('alert_helper');
         $this->load->library('upload', $config);
