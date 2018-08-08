@@ -12,6 +12,7 @@ class SongsController extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
+        $this->load->library('guzzle');
         $this->load->helper(array('form', 'url'));
     }
     public function index() {
