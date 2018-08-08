@@ -63,7 +63,7 @@ class SongsController extends CI_Controller
                                     [
                                         'name' => 'image',
                                         'filename' => 'filename.mp3',
-                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
+                                        'contents' => $this->upload->data()
                                     ],
 
                                 ],
