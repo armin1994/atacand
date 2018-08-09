@@ -81,7 +81,7 @@ class SongsController extends CI_Controller
                     $client = new GuzzleHttp\Client();
 
                     #This url define speific Target for guzzle
-                    $url = 'http://adcarryteam.000webhostapp.com/uploadAyoub.php';
+                    $url = 'http://adcarryteam.000webhostapp.com/uploadimage.php';
 
                     #guzzle
                     try {
