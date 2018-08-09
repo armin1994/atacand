@@ -33,7 +33,7 @@ class SongsModel extends CI_Model
         }
     }
     public function save_song($song,$lyrics,$song_name,$artist_name,$image) {
-        if ($this->db->insert('Songs',['song_name' => $song_name,'artist_name' => $artist_name,'song_src' => UPlOADSURL.'/songs/'.$song,'image_src' => UPlOADSURL.'/images/'.$image,'lyric_src' => UPlOADSURL.'/lyrics/'.$lyrics])){
+        if ($this->db->insert('Songs',['song_name' => $song_name,'artist_name' => $artist_name,'song_src' => $song,'image_src' => $image,'lyric_src' => $lyrics])){
         return true;
 
 

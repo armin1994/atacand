@@ -16,7 +16,7 @@ class SongsController extends CI_Controller
         $this->load->helper(array('form', 'url'));
     }
     public function index() {
-
+        $this->load->helper('alert_helper');
         if ($this->session->userdata('user_id')) {
             //$this->load->view('admin/dashboard');
             //$this->GetAllUser();
@@ -30,54 +30,83 @@ class SongsController extends CI_Controller
 
 
     }
-    public function do_upload_test2(){
-        $config['upload_path'] = UPLOADS . "/songs/";
-        $config['allowed_types'] = 'mp3|m4r';
-        $config['file_name'] = "test.mp3";
-        $config['overwrite'] = TRUE;
-        $this->load->helper('alert_helper');
-        $this->load->library('upload', $config);
-        $this->load->library('Alert');
-        $this->upload->initialize($config);
-        if (!$this->upload->do_upload('userfile')) {
 
-        } else {
-            foreach ($this->upload->data() as $item => $value):
-                if ($item === 'file_name') {
-            $mulipart = new GuzzleHttp\Psr7\MultipartStream(
-              [
-                  [
-                      'name' => 'upload_file',
-                      'contents' => fopen(UPLOADS."/songs/" .$value, 'r')
-                  ]
-              ]
-            );
-            $request = new GuzzleHttp\Psr7\Request('POST','http://adcarryteam.000webhostapp.com/uploadAyoub.php');
-            $request = $request->withBody($mulipart);
-            $client = new GuzzleHttp\Client();
-            $response = $client->send($request);
-            echo $response->getBody();
-                }
-            endforeach;
+    public function test_params(){
+        $song_name = $this->input->post('songName');
+        $artist_name = $this->input->post('artistName');
+        if (!empty($song_name) && !empty($artist_name) && $_FILES['userfile']['name'] != ""
+            && $_FILES['imageSong']['name'] != "" && $_FILES['userlyrics']['name'] != ""
+        ){
+            $this->do_upload_image();
+        }else{
+            $this->alert->set('alert-danger', 'Save: ' . 'please provide all the informations');
+            $this->load->view('admin/upload_song');
         }
     }
-    public function do_upload_test()
+    public function do_upload_image()
     {
+        $client = new GuzzleHttp\Client();
 
-        /*$config['upload_path'] = UPLOADS . "/songs/";
-        $config['allowed_types'] = 'mp3|m4r';
-        $config['file_name'] = "test.mp3";
-        $config['overwrite'] = TRUE;
-        $this->load->helper('alert_helper');
-        $this->load->library('upload', $config);
-        $this->load->library('Alert');
-        $this->upload->initialize($config);
-        if (!$this->upload->do_upload('userfile')) {
+        #This url define speific Target for guzzle
+        $url = 'http://adcarryteam.000webhostapp.com/uploadimage.php';
 
-        } else {
+        #guzzle
+        try {
+            $response = $client->request('POST',
+                $url,
+                [
+                    'multipart' => [
+                        ['name' => 'name' ,
+                            'contents' => 'aaaa'
 
-                foreach ($this->upload->data() as $item => $value):
-                    if ($item === 'file_name') { */
+
+                        ],
+
+                        [
+                            'name' => 'userfile',
+                            'filename' => $_FILES['imageSong']['name'],
+                            'contents' => fopen($_FILES['imageSong']['tmp_name'], 'r')
+                        ]
+
+                    ]
+
+                ]
+            );
+            #guzzle repose for future use
+
+            //echo $response->getStatusCode(); // 200
+            //echo $response->getReasonPhrase(); // OK
+            //echo $response->getProtocolVersion(); // 1.1
+            //echo $response->getBody();
+            $error = array('error' => $response);
+            $data = json_decode($response->getBody());
+            if ($response->getStatusCode() === 200) {
+                if ($data['message'] === 'Please choose a file') {
+                    $this->alert->set('alert-danger', 'Image: ' . $data['message']);
+                    $this->load->view('admin/upload_song');
+                } else {
+                    $this->session->set_userdata('user_song', $data['url']);
+                    $this->do_upload_song();
+                }
+            }else{
+                $this->alert->set('alert-danger', 'Image: ' . 'error occured with server,please try again');
+                $this->load->view('admin/upload_song');
+            }
+
+        } catch (GuzzleHttp\Exception\BadResponseException $e) {
+            #guzzle repose for future use
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            $error = array('error' => $responseBodyAsString);
+
+            $this->alert->set('alert-danger', 'Image: ' . $error);
+            $this->load->view('admin/upload_song');
+
+        }
+
+    }
+    public function do_upload_song()
+    {
                     $client = new GuzzleHttp\Client();
 
                     #This url define speific Target for guzzle
@@ -85,24 +114,6 @@ class SongsController extends CI_Controller
 
                     #guzzle
                     try {
-                        # guzzle post request example with form parameter
-
-                        /*$response = $client->request('POST',
-                            $url,
-                            [
-                                'multipart' => [
-
-                                    [
-                                        'name' => 'image',
-                                        'filename' => 'filename.mp3',
-                                        'contents' => fopen(UPLOADS."/songs/" .$value, 'r'),
-                                        'headers'  => ['Content-Type' => 'audio/mp3']
-                                    ],
-
-                                ],
-                                ['name' => 'saif']
-                            ]
-                        ); */
                         $response = $client->request('POST',
                             $url,
                             [
@@ -117,7 +128,7 @@ class SongsController extends CI_Controller
                                         'name' => 'userfile',
                                         'filename' => $_FILES['userfile']['name'],
                                         'contents' => fopen($_FILES['userfile']['tmp_name'], 'r')
-                                    ],
+                                    ]
 
                                 ]
 
@@ -125,128 +136,102 @@ class SongsController extends CI_Controller
                         );
                         #guzzle repose for future use
 
-                        echo $response->getStatusCode(); // 200
-                        echo $response->getReasonPhrase(); // OK
-                        echo $response->getProtocolVersion(); // 1.1
-                        echo $response->getBody();
+                        //echo $response->getStatusCode(); // 200
+                        //echo $response->getReasonPhrase(); // OK
+                        //echo $response->getProtocolVersion(); // 1.1
+                        //echo $response->getBody();
                         $error = array('error' => $response);
+                        $data = json_decode($response->getBody());
+                        if ($response->getStatusCode() === 200) {
+                            if ($data['message'] === 'Please choose a file') {
+                                $this->alert->set('alert-danger', 'Song: ' . $data['message']);
+                                $this->load->view('admin/upload_song');
+                            } else {
+                                $this->session->set_userdata('user_song', $data['url']);
+                                $this->do_upload_lyrics();
+                            }
+                        }else{
+                            $this->alert->set('alert-danger', 'Song: ' . 'error occured with server,please try again');
+                            $this->load->view('admin/upload_song');
+                        }
 
-                        $this->alert->set('alert-danger', 'Song: ' . $error);
-                        $this->load->view('admin/upload_song');
                     } catch (GuzzleHttp\Exception\BadResponseException $e) {
                         #guzzle repose for future use
                         $response = $e->getResponse();
                         $responseBodyAsString = $response->getBody()->getContents();
-                        print_r($responseBodyAsString);
                         $error = array('error' => $responseBodyAsString);
 
                         $this->alert->set('alert-danger', 'Song: ' . $error);
                         $this->load->view('admin/upload_song');
 
                     }
-     /*           }
-            endforeach;
-        } */
 
     }
-    public function do_upload() {
+    public function do_upload_lyrics()
+    {
+        $client = new GuzzleHttp\Client();
 
-        $config['upload_path']          = "https:".base_url().UPLOADS."/songs/";
-        $config['allowed_types']        = 'mp3|m4r';
-        $config['file_name'] = "test.mp3";
-        $this->load->helper('alert_helper');
-        $this->load->library('upload', $config);
-        $this->load->library('Alert');
-        $this->upload->initialize($config);
-        if ( ! $this->upload->do_upload('userfile'))
-        {
-            $error = array('error' => $this->upload->display_errors());
+        #This url define speific Target for guzzle
+        $url = 'http://adcarryteam.000webhostapp.com/uploadimage.php';
 
-            $this->alert->set('alert-danger','Song: '.$this->upload->display_errors());
-            $this->load->view('admin/upload_song');
-        }
-        else
-        {
-            $data = array('upload_data' => $this->upload->data());
-            //$active = array('active' => "22");
-            foreach ($this->upload->data() as $item => $value):
-            if ($item === 'raw_name'){
-                $this->alert->set('alert-success', 'Your song '.$value.' was successfully uploaded.');
-            }
-            if ($item === 'file_name') {
-                $this->session->set_userdata('user_song', $value);
-                $this->do_upload_lyrics();
-            }
-            endforeach;
+        #guzzle
+        try {
+            $response = $client->request('POST',
+                $url,
+                [
+                    'multipart' => [
+                        ['name' => 'name' ,
+                            'contents' => 'aaaa'
 
 
+                        ],
 
-        }
-    }
-    public function do_upload_lyrics() {
-        $config['upload_path']          = "https:".base_url().UPLOADS."/lyrics/";
-        $config['allowed_types']        = 'txt|lrc';
-        $this->load->helper('alert_helper');
-        $this->load->library('upload', $config);
-        $this->load->library('Alert');
-        $this->upload->initialize($config);
-        if ( ! $this->upload->do_upload('userlyrics'))
-        {
-            $error = array('error' => $this->upload->display_errors());
+                        [
+                            'name' => 'userfile',
+                            'filename' => $_FILES['userlyrics']['name'],
+                            'contents' => fopen($_FILES['userlyrics']['tmp_name'], 'r')
+                        ]
 
-            $this->alert->set('alert-danger','Lyric: '.$this->upload->display_errors());
-            $this->load->view('admin/upload_song');
-        }
-        else
-        {
-            $data = array('upload_data' => $this->upload->data());
-            //$active = array('active' => "22");
-            foreach ($this->upload->data() as $item => $value):
-                if ($item === 'raw_name'){
-                    $this->alert->set('alert-success', 'Your lyric '.$value.' was successfully uploaded.');
-                }
-                if ($item === 'file_name') {
-                    $this->session->set_userdata('user_lyrics', $value);
-                    $this->do_upload_image();
-                }
-            endforeach;
+                    ]
 
+                ]
+            );
+            #guzzle repose for future use
 
-
-        }
-    }
-    public function do_upload_image() {
-        $config['upload_path']          = "https:".base_url().UPLOADS."/images/";
-        $config['allowed_types']        = 'jpg|jpeg|png';
-        $this->load->helper('alert_helper');
-        $this->load->library('upload', $config);
-        $this->load->library('Alert');
-        $this->upload->initialize($config);
-        if ( ! $this->upload->do_upload('imageSong'))
-        {
-            $error = array('error' => $this->upload->display_errors());
-
-            $this->alert->set('alert-danger','Image: '.$this->upload->display_errors());
-            $this->load->view('admin/upload_song');
-        }
-        else
-        {
-            $data = array('upload_data' => $this->upload->data());
-            //$active = array('active' => "22");
-            foreach ($this->upload->data() as $item => $value):
-                if ($item === 'raw_name'){
-                    $this->alert->set('alert-success', 'Your image '.$value.' was successfully uploaded.');
-                }
-                if ($item === 'file_name') {
-                    $this->session->set_userdata('user_img', $value);
+            //echo $response->getStatusCode(); // 200
+            //echo $response->getReasonPhrase(); // OK
+            //echo $response->getProtocolVersion(); // 1.1
+            //echo $response->getBody();
+            $error = array('error' => $response);
+            $data = json_decode($response->getBody());
+            if ($response->getStatusCode() === 200) {
+                if ($data['message'] === 'Please choose a file') {
+                    $this->alert->set('alert-danger', 'Lyrics: ' . $data['message']);
+                    $this->load->view('admin/upload_song');
+                } else {
+                    $this->session->set_userdata('user_lyrics', $data['url']);
                     $this->save_song();
                 }
-            endforeach;
+            }else{
+                $this->alert->set('alert-danger', 'Lyrcis: ' . 'error occured with server,please try again');
+                $this->load->view('admin/upload_song');
+            }
 
+        } catch (GuzzleHttp\Exception\BadResponseException $e) {
+            #guzzle repose for future use
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            $error = array('error' => $responseBodyAsString);
 
+            $this->alert->set('alert-danger', 'Lyrics: ' . $error);
+            $this->load->view('admin/upload_song');
 
         }
+
     }
+
+
+
     public function save_song()
     {
 
