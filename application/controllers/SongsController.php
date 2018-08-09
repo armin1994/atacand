@@ -85,7 +85,7 @@ class SongsController extends CI_Controller
                     $this->alert->set('alert-danger', 'Image: ' . $data['message']);
                     $this->load->view('admin/upload_song');
                 } else {
-                    $this->session->set_userdata('user_song', $data['url']);
+                    $this->session->set_userdata('user_img', $data['url']);
                     $this->do_upload_song();
                 }
             }else{
