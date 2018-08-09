@@ -79,7 +79,7 @@ class SongsController extends CI_Controller
             //echo $response->getProtocolVersion(); // 1.1
             //echo $response->getBody();
             $error = array('error' => $response);
-            $data = json_decode($response->getBody());
+            $data = json_decode($response->getBody(),true);
             if ($response->getStatusCode() === 200) {
                 if ($data['message'] === 'Please choose a file') {
                     $this->alert->set('alert-danger', 'Image: ' . $data['message']);
@@ -141,7 +141,7 @@ class SongsController extends CI_Controller
                         //echo $response->getProtocolVersion(); // 1.1
                         //echo $response->getBody();
                         $error = array('error' => $response);
-                        $data = json_decode($response->getBody());
+                        $data = json_decode($response->getBody(),true);
                         if ($response->getStatusCode() === 200) {
                             if ($data['message'] === 'Please choose a file') {
                                 $this->alert->set('alert-danger', 'Song: ' . $data['message']);
@@ -203,7 +203,7 @@ class SongsController extends CI_Controller
             //echo $response->getProtocolVersion(); // 1.1
             //echo $response->getBody();
             $error = array('error' => $response);
-            $data = json_decode($response->getBody());
+            $data = json_decode($response->getBody(),true);
             if ($response->getStatusCode() === 200) {
                 if ($data['message'] === 'Please choose a file') {
                     $this->alert->set('alert-danger', 'Lyrics: ' . $data['message']);
