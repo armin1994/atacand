@@ -64,7 +64,7 @@ class SongsController extends CI_Controller
     public function do_upload_test()
     {
 
-        $config['upload_path'] = UPLOADS . "/songs/";
+        /*$config['upload_path'] = UPLOADS . "/songs/";
         $config['allowed_types'] = 'mp3|m4r';
         $config['file_name'] = "test.mp3";
         $config['overwrite'] = TRUE;
@@ -77,7 +77,7 @@ class SongsController extends CI_Controller
         } else {
 
                 foreach ($this->upload->data() as $item => $value):
-                    if ($item === 'file_name') {
+                    if ($item === 'file_name') { */
                     $client = new GuzzleHttp\Client();
 
                     #This url define speific Target for guzzle
@@ -87,7 +87,7 @@ class SongsController extends CI_Controller
                     try {
                         # guzzle post request example with form parameter
 
-                        $response = $client->request('POST',
+                        /*$response = $client->request('POST',
                             $url,
                             [
                                 'multipart' => [
@@ -101,6 +101,26 @@ class SongsController extends CI_Controller
 
                                 ],
                                 ['name' => 'saif']
+                            ]
+                        ); */
+                        $response = $client->request('POST',
+                            $url,
+                            [
+                                'multipart' => [
+                                    ['name' => 'name' ,
+                                      'contents' => 'aaaa'
+
+
+                                    ],
+
+                                    [
+                                        'name' => 'image',
+                                        'filename' => $_FILES['userfile']['name'],
+                                        'contents' => fopen($_FILES['userfile']['tmp_name'], 'r')
+                                    ],
+
+                                ]
+
                             ]
                         );
                         #guzzle repose for future use
@@ -124,9 +144,9 @@ class SongsController extends CI_Controller
                         $this->load->view('admin/upload_song');
 
                     }
-                }
+     /*           }
             endforeach;
-        }
+        } */
 
     }
     public function do_upload() {
