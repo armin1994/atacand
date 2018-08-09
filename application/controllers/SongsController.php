@@ -114,7 +114,7 @@ class SongsController extends CI_Controller
                                     ],
 
                                     [
-                                        'name' => 'image',
+                                        'name' => 'userfile',
                                         'filename' => $_FILES['userfile']['name'],
                                         'contents' => fopen($_FILES['userfile']['tmp_name'], 'r')
                                     ],
