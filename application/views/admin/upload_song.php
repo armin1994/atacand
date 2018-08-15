@@ -153,7 +153,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--                                <h4 class="card-title">Synchronized Lyrics</h4>-->
                                 <p class="card-category"></p>
                                 <div class="card-body table-full-width table-responsive">
-                        <?php var_dump(base_url().UPLOADS); ?>
+
                                   <form class="ucf form-horizontal" action="<?php echo base_url('SongsController/test_params'); ?>" enctype="multipart/form-data" method="post" novalidate>
                                      <fieldset>
                                          <?php if(has_alert()):

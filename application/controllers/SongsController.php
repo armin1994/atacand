@@ -12,11 +12,11 @@ class SongsController extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
-
+        $this->load->helper('alert_helper');
         $this->load->helper(array('form', 'url'));
     }
     public function index() {
-        $this->load->helper('alert_helper');
+
         if ($this->session->userdata('user_id')) {
             //$this->load->view('admin/dashboard');
             //$this->GetAllUser();
