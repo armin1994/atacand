@@ -80,9 +80,9 @@ class SongsController extends CI_Controller
             //echo $response->getBody();
             $error = array('error' => $response);
             $data = json_decode($response->getBody(),true);
-            print_r($data);
+
             if ($response->getStatusCode() === 200) {
-                if (isset($data['message'])) {
+
                     if ($data['message'] === 'Please choose a file') {
                         $this->alert->set('alert-danger', 'Image: ' . $data['message']);
                         $this->load->view('admin/upload_song');
@@ -90,9 +90,7 @@ class SongsController extends CI_Controller
                         $this->session->set_userdata('user_img', $data['url']);
                         $this->do_upload_song();
                     }
-                }else{
 
-                }
             }else{
                 $this->alert->set('alert-danger', 'Image: ' . 'error occured with server,please try again');
                 $this->load->view('admin/upload_song');
