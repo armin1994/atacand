@@ -116,6 +116,26 @@ class API extends REST_Controller2 {
         }
 
     }
+public function saveSong_post() {
 
+        $song_src = $this->post('song_src');
+        $user_id = $this->post('id_user');
+        $song = $this->post('id_song');
+        $date = new DateTime();
+    $res = $this->SongsModel->save_song_user($date,$song,$song_src,$user_id);
+    if ($res) {
+        $response_array['status'] = 'true';
+        $response_array['data'] = [];
+        $response_array['message'] = "go on";
+        $this->response($response_array,200);
+    }else{
+        $response_array['status'] = 'true';
+        $response_array['data'] = [];
+        $response_array['message'] = "error while saving the song";
+        $this->response($response_array,200);
+    }
+
+
+}
 
 }

@@ -200,7 +200,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                              </label>
                                              <div class="col-sm-10">
 
-                                                 <?php echo "<input class= 'form-control' name='userfile' type='file' accept='.mp3,.m4r' maxlength='255'>"; ?>
+                                                 <?php echo "<input class= 'form-control' name='userfile' type='file' accept='.mp3, .m4r' >"; ?>
                                              </div>
                                          </div>
                                          <div class="form-group">
