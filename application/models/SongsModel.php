@@ -41,7 +41,7 @@ class SongsModel extends CI_Model
             return false;
         }
     }
-    public  function  save_song_user($song,$song_id,$user_id,$date) {
+    public  function  save_song_user($date,$song_id,$song,$user_id) {
         if ($this->db->insert('songs_user',['date' => $date, 'song_src' => $song, 'song_id' => $song_id,'user_id' => $user_id])) {
             return true;
         }else{
