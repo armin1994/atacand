@@ -122,7 +122,7 @@ public function saveSong_post() {
         $user_id = $this->post('id_user');
         $song = $this->post('id_song');
         $date = new DateTime();
-    $res = $this->SongsModel->save_song_user($date,$song,$song_src,$user_id);
+    $res = $this->SongsModel->save_song_user($date->format(DATE_RFC2822),$song,$song_src,$user_id);
     if ($res) {
         $response_array['status'] = 'true';
         $response_array['data'] = [];
