@@ -39,7 +39,7 @@ class Doctrine
 		$models_namespace = 'Entity';
 		$models_path = APPPATH . 'models';
 		$proxies_dir = APPPATH . 'models/Proxies';
-		$metadata_paths = array(APPPATH . 'models/Entity');
+		$metadata_paths = array(APPPATH . 'models/generated');
 
 		// Set $dev_mode to TRUE to disable caching while you develop
 		$dev_mode = false;

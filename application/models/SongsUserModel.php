@@ -27,7 +27,7 @@ class SongsUserModel extends CI_Model
         $em = $doctrine->em;
 
         //$password = md5($password);
-        $res = $em->find(SongsUser::class,$user_id);
+        $res = $em->find(\models\generated\SongsUser::class,$user_id);
         if ($res) {
             return $res;
         }else{
