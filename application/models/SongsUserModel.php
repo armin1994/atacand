@@ -17,7 +17,7 @@ class SongsUserModel extends CI_Model
 
         parent::__construct();
         //$this->load->database();
-        $this->load->library('Doctrine');
+
 
 
     }
