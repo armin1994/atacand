@@ -137,5 +137,21 @@ public function saveSong_post() {
 
 
 }
+public function getHistory_post() {
+        $user_id = $this->post('id_user');
+        $res = $this->SongsUserModel->getHistory($user_id);
+        if ($res) {
+            $response_array['status'] = 'true';
+            $response_array['data'] = $res;
+            $response_array['message'] = "successful";
+            $this->response($response_array,200);
+        }else{
+            $response_array['status'] = 'false';
+            $response_array['data'] = [];
+            $response_array['message'] = "empty";
+            $this->response($response_array,200);
+        }
+}
+
 
 }
