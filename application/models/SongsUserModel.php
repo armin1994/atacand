@@ -23,8 +23,9 @@ class SongsUserModel extends CI_Model
     }
     public function getHistory($user_id)
     {
-        //$doctrine = new Doctrine;
-        $em = $this->Doctrine->em;
+        $doctrine = new Doctrine;
+        $em = $doctrine->em;
+
         //$password = md5($password);
         $res = $em->find(SongsUser::class,$user_id);
         if ($res) {
