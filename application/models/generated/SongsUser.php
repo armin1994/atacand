@@ -1,5 +1,4 @@
 <?php
-namespace models\generated;
 
 
 use Doctrine\ORM\Mapping as ORM;
