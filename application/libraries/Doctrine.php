@@ -36,7 +36,7 @@ class Doctrine
 
 		// With this configuration, your model files need to be in application/models/Entity
 		// e.g. Creating a new Entity\User loads the class from application/models/Entity/User.php
-		$models_namespace = 'Entity';
+		$models_namespace = APPPATH .'models/generated';
 		$models_path = APPPATH . 'models';
 		$proxies_dir = APPPATH . 'models/Proxies';
 		$metadata_paths = array(APPPATH . 'models/generated');

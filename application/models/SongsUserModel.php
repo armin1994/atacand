@@ -5,6 +5,7 @@
  * Date: 2018-09-01
  * Time: 2:13 PM
  */
+require APPPATH . "libraries/Doctrine.php";
 class SongsUserModel extends CI_Model
 {
     /**
