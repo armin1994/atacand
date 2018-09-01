@@ -14,6 +14,8 @@ class API extends REST_Controller2 {
 
         $this->load->model('Loginmodel');
         $this->load->model('SongsModel');
+        $this->load->model('SongsUserModel');
+
     }
     function registeruser_post() {
        $First = $this->post('first_name');
