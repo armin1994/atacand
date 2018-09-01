@@ -13,7 +13,8 @@
 	"require": {
 		"php": ">=5.3.7",
 		"chriskacerguis/codeigniter-restserver": "^3.0",
-		"guzzlehttp/guzzle": "^6.3" 
+		"guzzlehttp/guzzle": "^6.3",
+        "doctrine/orm": "2.5.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

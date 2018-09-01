@@ -5,6 +5,7 @@
  * Date: 2018-09-01
  * Time: 2:13 PM
  */
+use SongsUser;
 class SongsUserModel extends CI_Model
 {
     /**
@@ -16,21 +17,23 @@ class SongsUserModel extends CI_Model
     public function __construct() {
 
         parent::__construct();
-        $this->load->database();
+        //$this->load->database();
+
+
 
     }
     public function getHistory($user_id)
     {
-
+        $doctrine = new Doctrine;
+        $em = $doctrine->em;
         //$password = md5($password);
-        $p = $this->db->select('*')->from('songs_user')->where(['user_id' =>$user_id])->get();
-        if ($p->num_rows()>=1) {
-
-            return $p->result_array();
-            //return TRUE;
-        } else {
-            return FALSE;
+        $res = $em->find(SongsUser::class,$user_id);
+        if ($res) {
+            return $res;
+        }else{
+            return false;
         }
+
     }
 
 }
