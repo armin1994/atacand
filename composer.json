@@ -11,10 +11,11 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": ">=5.3.7",
+		"php": ">=7.1.9",
 		"chriskacerguis/codeigniter-restserver": "^3.0",
 		"guzzlehttp/guzzle": "^6.3",
-        "doctrine/orm": "2.5.0"
+		"doctrine/orm": "2.6.0",
+		"jms/serializer": "^1.13"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

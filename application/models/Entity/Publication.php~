@@ -1,0 +1,47 @@
+<?php
+
+namespace Entity;
+
+
+
+
+/**
+ * Publication
+ *
+ * @Table(name="publication")
+ * @Entity
+ */
+class Publication
+{
+    /**
+     * @var int
+     *
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string|null
+     *
+     * @Column(name="file", type="string", length=255, nullable=true)
+     */
+    private $file;
+
+    /**
+     * @var string|null
+     *
+     * @Column(name="type", type="string", length=10, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string|null
+     *
+     * @Column(name="date", type="string", length=255, nullable=true)
+     */
+    private $date;
+
+
+}

@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'singtn.c4nfapv87zva.eu-west-3.rds.amazonaws.com:3306',
+	'hostname' => 'localhost:3306',
 	'username' => 'root',
-	'password' => 'root1234',
+	'password' => '',
 	'database' => 'singDB',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

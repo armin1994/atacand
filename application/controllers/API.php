@@ -139,9 +139,24 @@ public function saveSong_post() {
 
 
 }
-public function getHistory_post() {
-        $user_id = $this->post('id_user');
+public function getHistory_get() {
+        $user_id = $this->get('id_user');
         $res = $this->SongsUserModel->getHistory($user_id);
+        //var_dump($res[0]->getParticipants());
+   // $this->load->library('doctrine');
+    //$res = new Entity\Users();
+    //$res = $this->doctrine->em->getRepository(Entity\Users::class)->find(array("id" => $user_id));
+    //$user_song = new \Entity\SongsUser();
+  //  $user_song =  $this->doctrine->em->getRepository(Entity\SongsUser::class)->findAll(array("user_id" => $user_id));
+
+  // foreach ($user_song as $item) {
+    //   $res->addUserSongs($item);
+      // print_r("hi");
+  // }
+  // print_r($res->getUserSongs()->count());
+   // $this->doctrine->em->persist($res);
+   // $this->doctrine->em->flush();
+   // $res = $this->doctrine->em->getRepository(Entity\Users::class)->find(array("id" => $user_id));
         if ($res) {
             $response_array['status'] = 'true';
             $response_array['data'] = $res;
@@ -149,7 +164,7 @@ public function getHistory_post() {
             $this->response($response_array,200);
         }else{
             $response_array['status'] = 'false';
-            $response_array['data'] = [];
+            $response_array['data'] = $res;
             $response_array['message'] = "empty";
             $this->response($response_array,200);
         }

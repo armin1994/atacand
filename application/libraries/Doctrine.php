@@ -1,58 +1,54 @@
 <?php
+/**
+ * Part of CodeIgniter Doctrine
+ *
+ * @author     Kenji Suzuki <https://github.com/kenjis>
+ * @license    MIT License
+ * @copyright  2015 Kenji Suzuki
+ * @link       https://github.com/kenjis/codeigniter-doctrine
+ */
 
+/*
+ * This code is based on http://doctrine-orm.readthedocs.org/en/latest/cookbook/integrating-with-codeigniter.html
+ */
 include_once FCPATH . 'vendor/autoload.php';
 
-use Doctrine\Common\ClassLoader;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\Common\ClassLoader,
+    Doctrine\ORM\Tools\Setup,
+    Doctrine\ORM\EntityManager;
 
-/**
- * Doctrine bootstrap library for CodeIgniter
- *
- * @author	Joseph Wynn <joseph@wildlyinaccurate.com>
- * @link	http://wildlyinaccurate.com/integrating-doctrine-2-with-codeigniter-2
- */
 class Doctrine
 {
+    public $em;
 
-	public $em;
+    public function __construct()
+    {
 
-	public function __construct()
-	{
-		// Load the database configuration from CodeIgniter
-		require APPPATH . 'config/database.php';
 
-		$connection_options = array(
-			'driver'		=> 'pdo_mysql',
-			'user'			=> $db['default']['username'],
-			'password'		=> $db['default']['password'],
-			'host'			=> $db['default']['hostname'],
-			'dbname'		=> $db['default']['database'],
-			'charset'		=> $db['default']['char_set'],
-			'driverOptions'	=> array(
-				'charset'	=> $db['default']['char_set'],
-			),
-		);
+        // Load the database configuration from CodeIgniter
+        require APPPATH . 'config/database.php';
 
-		// With this configuration, your model files need to be in application/models/Entity
-		// e.g. Creating a new Entity\User loads the class from application/models/Entity/User.php
-		$models_namespace =  'generated';
-		$models_path = APPPATH . 'models';
-		$proxies_dir = APPPATH . 'models/Proxies';
-		$metadata_paths = array(APPPATH . 'models/generated');
+        $connection_options = array(
+            'driver'        => $db['default']['dbdriver'],
+            'user'          => $db['default']['username'],
+            'password'      => $db['default']['password'],
+            'host'          => $db['default']['hostname'],
+            'dbname'        => $db['default']['database'],
+            'charset'       => $db['default']['char_set'],
 
-		// Set $dev_mode to TRUE to disable caching while you develop
-		$dev_mode = false;
+        );
 
-		// If you want to use a different metadata driver, change createAnnotationMetadataConfiguration
-		// to createXMLMetadataConfiguration or createYAMLMetadataConfiguration.
-		$config = Setup::createAnnotationMetadataConfiguration($metadata_paths, $dev_mode, $proxies_dir);
-        $driver = new \Doctrine\ORM\Mapping\Driver\PHPDriver(APPPATH.'models/generated');
-        $config->setMetadataDriverImpl($driver);
-		$this->em = EntityManager::create($connection_options, $config);
+        // With this configuration, your model files need to be in application/models/Entity
+        // e.g. Creating a new Entity\User loads the class from application/models/Entity/User.php
+        $models_namespace = 'Entity';
+        $models_path = APPPATH . 'models';
+        $proxies_dir = APPPATH . 'models/Proxies';
+        $metadata_paths = array(APPPATH . 'models/Entity');
+        // Set $dev_mode to TRUE to disable caching while you develop
+        $config = Setup::createAnnotationMetadataConfiguration($metadata_paths, $dev_mode = true, $proxies_dir);
+        $this->em = EntityManager::create($connection_options, $config);
 
-		$loader = new ClassLoader($models_namespace, $models_path);
-		$loader->register();
-	}
-
+        $loader = new ClassLoader($models_namespace, $models_path);
+        $loader->register();
+    }
 }

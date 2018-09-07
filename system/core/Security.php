@@ -1016,7 +1016,7 @@ class CI_Security {
 	// --------------------------------------------------------------------
 
 	/**
-	 * HTML Entity Decode Callback
+	 * HTML Entities Decode Callback
 	 *
 	 * @used-by	CI_Security::xss_clean()
 	 * @param	array	$match
